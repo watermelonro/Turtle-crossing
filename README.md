@@ -1,27 +1,26 @@
-STARTING_POSITION = (0, -280)
-MOVE_DISTANCE = 10
-FINISH_LINE_Y = 280
-
 from turtle import Turtle
 
+ALIGNMENT = "center"
+FONT = ("Courier", 24, "normal")
 
-class Player(Turtle):
+
+class Scoreboard(Turtle):
     def __init__(self):
         super().__init__()
-        self.shape("turtle")
+        self.hideturtle()
         self.penup()
-        self.go_starting_pos()
-        self.setheading(90)
+        self.level = 1
+        self.goto(-200, 250)
+        self.update_scoreboard()
 
-    def move(self):
-        self.forward(MOVE_DISTANCE)
+    def update_scoreboard(self):
+        self.clear()
+        self.write(f"Level: {self.level}", align=ALIGNMENT, font=FONT)
 
-    def go_starting_pos(self):
-        self.goto(STARTING_POSITION)
+    def increase_level(self):
+        self.level += 1
+        self.update_scoreboard()
 
-    def is_at_finish_line(self):
-        if self.ycor() > FINISH_LINE_Y:
-            self.go_starting_pos()
-            return True
-        else:
-            return False
+    def game_over(self):
+        self.goto(0, 0)
+        self.write(f"GAME OVER", align=ALIGNMENT, font=FONT)
